@@ -1,13 +1,18 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, AfterViewInit } from '@angular/core';
+import { DynamicIdManagerService } from './services/dynamic-id-manager.service';
+import { UserSearchComponent } from './user-search/user-search.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [UserSearchComponent], // Include the standalone component here
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
-  title = 'user-search-poc';
+export class AppComponent implements AfterViewInit {
+  constructor(private dynamicIdManager: DynamicIdManagerService) {}
+
+  ngAfterViewInit(): void {
+    this.dynamicIdManager.applyDynamicIds();
+  }
 }

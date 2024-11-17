@@ -1,0 +1,33 @@
+<div>
+  <h2>User Search</h2>
+  <form>
+    <div *ngFor="let field of inputFields">
+      <label>
+        {{ field.label }}
+        <input
+          *ngIf="field.type === 'text'"
+          [(ngModel)]="searchParameters[field.key]"
+          [placeholder]="field.placeholder"
+          type="text"
+          name="{{ field.key }}"
+        />
+      </label>
+    </div>
+    <button (click)="onSearch()">Search</button>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th *ngFor="let field of inputFields">{{ field.label }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of filteredUsers">
+        <td *ngFor="let field of inputFields">
+          {{ getUserFieldValue(user, field.key) }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
