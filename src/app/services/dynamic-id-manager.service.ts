@@ -17,6 +17,9 @@ export class DynamicIdManagerService {
   applyDynamicIds(): void {
     // Select elements that need IDs
     const elements = document.querySelectorAll('input, button, table, select, textarea');
+    let counterForUnkonwnGenericElements = 1;
+    let counterForUnknownButtonElements = 1;
+
 
     elements.forEach((element) => {
       // Skip if the element already has an ID
@@ -24,14 +27,20 @@ export class DynamicIdManagerService {
 
       const elementType = element.tagName.toLowerCase(); // Get tag name (e.g., 'input', 'button')
       const inputType = element.getAttribute('type') || elementType; // Get type or fallback to tag name
-      let fieldName = element.getAttribute('name') || element.getAttribute('placeholder') || 'element'; // Extract 'name' or 'placeholder'
+      let fieldName = ""
 
       // For buttons, use text content if no name/placeholder is available
       if (elementType === 'button') {
-        const buttonText = (element.textContent || '').trim();
+        const buttonText = (element.textContent || 'element' + counterForUnknownButtonElements++).trim();
         if (buttonText) {
           fieldName = buttonText;
         }
+      } else {
+        fieldName =
+          element.getAttribute('name') ||
+          element.getAttribute('placeholder') ||
+          element.getAttribute('ng-reflect-name') || // Check ng-reflect-name
+          'element' + counterForUnkonwnGenericElements++; // Default to 'element' if no identifier found
       }
 
       const associatedString = fieldName.replace(/\s+/g, ''); // Remove spaces for valid ID

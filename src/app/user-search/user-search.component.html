@@ -2,32 +2,54 @@
   <h2>User Search</h2>
   <form>
     <div *ngFor="let field of inputFields">
-      <label>
+      <label *ngIf="field.type !== 'button'">
         {{ field.label }}
+        <!-- Text/Password/TextArea -->
         <input
-          *ngIf="field.type === 'text'"
+          *ngIf="field.type === 'text' || field.type === 'password'"
           [(ngModel)]="searchParameters[field.key]"
-          [placeholder]="field.placeholder"
-          type="text"
-          name="{{ field.key }}"
+          [placeholder]="field.placeholder || ''"
+          [type]="field.type"
+          [name]="field.key"
         />
+        <textarea
+          *ngIf="field.type === 'textarea'"
+          [(ngModel)]="searchParameters[field.key]"
+          [placeholder]="field.placeholder || ''"
+          [name]="field.key"
+        ></textarea>
+        <!-- Checkbox -->
+        <input
+          *ngIf="field.type === 'checkbox'"
+          [(ngModel)]="searchParameters[field.key]"
+          [name]="field.key"
+          type="checkbox"
+        />
+        <!-- Radio Buttons -->
+        <input
+          *ngIf="field.type === 'radio'"
+          [(ngModel)]="searchParameters[field.group || '']"
+          [name]="field.group || ''"
+          [value]="field.value"
+          type="radio"
+        />
+        <!-- Dropdown -->
+        <select
+          *ngIf="field.type === 'select'"
+          [(ngModel)]="searchParameters[field.key]"
+          [name]="field.key"
+        >
+          <option *ngFor="let option of field.options || []" [value]="option">{{ option }}</option>
+        </select>
       </label>
+      <!-- Button -->
+      <button
+        *ngIf="field.type === 'button'"
+        type="button"
+        (click)="field.key === 'searchButton' ? onSearch() : null"
+      >
+        {{ field.text }}
+      </button>
     </div>
-    <button (click)="onSearch()">Search</button>
   </form>
-
-  <table>
-    <thead>
-      <tr>
-        <th *ngFor="let field of inputFields">{{ field.label }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let user of filteredUsers">
-        <td *ngFor="let field of inputFields">
-          {{ getUserFieldValue(user, field.key) }}
-        </td>
-      </tr>
-    </tbody>
-  </table>
 </div>
