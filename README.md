@@ -1,27 +1,23 @@
-# UserSearchPoc
+Consistent Dynamic ID Generation for Angular Application:
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.12.
+This project demonstrates how to dynamically generate unique IDs for UI elements in an Angular application. The solution is designed to be scalable and reusable, making it suitable for large applications where IDs are essential for automation testing, accessibility, or analytics.
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Features
+Dynamic ID Generation: Automatically generates IDs for HTML elements based on a structured format.
+Configurable Naming Format: The IDs are created in the format: PageName-Functionality-ElementType-FieldName.
+Support for Various Input Types: Works with text, select, checkbox, and more.
+Hidden Element Support: IDs are also generated for hidden elements to ensure consistency.
+Scalable Design: Easily extendable to other components in the application.
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
+Technology Stack
+Frontend: Angular 16
+Styling: CSS
+Testing: Designed to support Selenium and other automation tools.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
