@@ -31,16 +31,18 @@ export class DynamicIdManagerService {
 
       // For buttons, use text content if no name/placeholder is available
       if (elementType === 'button') {
-        const buttonText = (element.textContent || 'element' + counterForUnknownButtonElements++).trim();
+        const buttonText = (element.textContent || '-element' + counterForUnknownButtonElements++).trim();
         if (buttonText) {
           fieldName = buttonText;
         }
       } else {
+        const ngReflectName = element.getAttribute('ng-reflect-name') || '';
+        const ngReflectValue = element.getAttribute('ng-reflect-value') || '';
         fieldName =
           element.getAttribute('name') ||
           element.getAttribute('placeholder') ||
-          element.getAttribute('ng-reflect-name') || // Check ng-reflect-name
-          'element' + counterForUnkonwnGenericElements++; // Default to 'element' if no identifier found
+          (ngReflectName && ngReflectValue ? `${ngReflectName}-${ngReflectValue}` : ngReflectName ||
+          '-element' + counterForUnkonwnGenericElements++);
       }
 
       const associatedString = fieldName.replace(/\s+/g, ''); // Remove spaces for valid ID
